@@ -1,7 +1,7 @@
 from telebot import types
 # import model
 import controller
-import psycopg2
+# import psycopg2
 
 
 def start_menu(message):
@@ -23,11 +23,13 @@ def info_text(message):
                                                  '● коэффициенты, вычисленные на основе алгоритма ml; \n '
                                                  '● сведения, полученные по курсам ЦБ РФ ( "http://www.cbr.ru/currency_base/daily/ ";\n'
                                                  '● сведения по котировкам с сайта ВОС: "https://www.boc.cn/sourcedb/whpj/enindex_1619.html"\n\n'
-                                                 'Для выполнения расчета - нажать кнопку "✅ Расчет"')
+                                                 'Для выполнения расчета - нажать кнопку "✅ Расчет"\n'
+                                                 'В связи с обращением к API ВОС возврат результата осуществляется в течении 5..10 сек.')
 
 def calculate_text(message, trans_data):
 
-    controller.bot.send_message(message.chat.id, f' Расчетное значение:  <b>{trans_data["total_result"]:.2f} </b>', parse_mode="HTML")
+    controller.bot.send_message(message.chat.id, f' Расчетное значение:  <b>{trans_data["total_result"]:.6f} </b>', parse_mode="HTML")
+    controller.bot.send_message(message.chat.id, f' Округленное значение:  <b>{trans_data["total_result"]:.2f} </b>', parse_mode="HTML")
     controller.bot.send_message(message.chat.id, f' Расчетное значение +0.25:  <b>{trans_data["total_result_up"]:.2f} </b>', parse_mode="HTML")
     controller.bot.send_message(message.chat.id, f'Использованы курсы ЦБ и ВОС: ')
     controller.bot.send_message(message.chat.id, f'Курс CNY =  {trans_data["Curs_CNY"]} ')
