@@ -1,14 +1,10 @@
 #pip install pyTelegramBotAPI
 import pandas as pd
-from datetime import datetime
 import telebot
-from telebot import types
 import config
 import view
-# import model
 from bocfx import bocfx
-import schedule
-import time
+
 
 
 bot = telebot.TeleBot(config.token)
@@ -131,8 +127,11 @@ def bot_sheduler(bot_2, CHAT_ID, hour, minute):
 
     total_result_up = total_result + 0.25
 
+    if minute < 10:
+        minute = '0' + str(minute)
 
-    bot_2.send_message(CHAT_ID, f'⌛ {hour}:{minute} значение курса: {total_result:.2f} \n')
-    bot_2.send_message(CHAT_ID, f'Увеличенное на +0,25: {total_result_up:.2f} \n')
+    bot_2.send_message(CHAT_ID, f'⌛ {hour}:{minute} Курс юаня: {total_result:.2f} \n')
+    # bot_2.send_message(CHAT_ID, f'Увеличенное на +0,25: {total_result_up:.2f} \n')
+
     print(f'Завершен вывод в канал на {hour}:{minute} ')
 
